@@ -1,4 +1,4 @@
-# loto_facil
+# Lotofácil
 Lotofácil is a brazilian lottery which you can choose from 15 to 20 
 numbers of 25 available, and you earn a price if you hit 11, 12, 13, 
 14 or 15 numbers. You can let the lottery system choose the numbers 
