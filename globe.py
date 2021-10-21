@@ -17,8 +17,3 @@ class Globe:
             ball_drawn = choice(balls)
             self.draw.append(ball_drawn)
             balls.remove(ball_drawn)
-            
-if __name__ == "__main__":
-    gl = Globe()
-    gl.run_drawn()
-    print(gl.draw)
