@@ -89,6 +89,8 @@ def main():
     simulated_frequencies = get_frequencies(simulated_draws, balls)
     make_plot(balls, simulated_frequencies, "simulated_balls_draw", 
             "Simulated 1,000,000 Draws")
+    
+    # TODO: Implement most common neighbors
 
 if __name__ == "__main__":
     main()
