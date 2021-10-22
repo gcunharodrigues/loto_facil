@@ -63,7 +63,6 @@ def get_simulated_data(number_draws, lower_ball,
         
     return draws_simulation
     
-
 def main():
     # Get real data from csv file
     filename = 'data/loto_facil_compiled_draws_2345.csv'
