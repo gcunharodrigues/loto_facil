@@ -99,6 +99,43 @@ def create_ball_dict(draws_sorted, balls):
     
     return ball_dict
 
+def get_qty_sequential_numbers(draws_sorted, balls_drawn):
+    """Function that returns a dictionary the quantity of sequential 
+    numbers of all draws.
+    
+    Args:
+        draws_sorted (Nested List): Sorted nested list with integer 
+                                    numbers
+        balls_drawn (integer): How many balls will be drawn.
+
+    Returns:
+        Dictionary: Dictionary - {sequential: quantity}
+    """    
+    qty_sequential = {sequence: 0 for sequence in range(1, balls_drawn+1)}
+    sequential_draws_dict = {}
+    
+    for index_draw, draw in enumerate(draws_sorted):
+        
+        count = 1
+        
+        sequential_draw = {sequence: 0 for sequence in range(1, balls_drawn+1)}
+        
+        for index, number in enumerate(draw):
+            if index != 0: 
+                if draw[index-1] == number-1:
+                    count += 1
+                else:
+                    qty_sequential[count] += 1
+                    sequential_draw[count] += 1
+                    count = 1
+        
+        qty_sequential[count] += 1
+        sequential_draw[count] += 1
+        
+        sequential_draws_dict[index_draw] = sequential_draw
+        
+    return qty_sequential, sequential_draws_dict
+
 def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
     balls_sorted = list(ball_frequency_sorted_dict.keys())
@@ -129,30 +166,40 @@ def main():
     real_frequencies = get_frequencies(draws, balls)
     ball_frequency_dict = {ball: frequency for ball, frequency in 
                            zip(balls, real_frequencies)}
-    make_plot(list(ball_frequency_dict.keys()), 
-              list(ball_frequency_dict.values()), 
-              "real_balls_draw", "Real Balls Draw")
+    # make_plot(list(ball_frequency_dict.keys()), 
+    #           list(ball_frequency_dict.values()), 
+    #           "real_balls_draw", "Real Balls Draw")
     
     # Sort low to high frequencies of balls
     ball_frequency_sorted_dict = dict(sorted(ball_frequency_dict.items(), 
                                         key=itemgetter(1)))
     balls_sorted = [f'{ball}' for ball in 
                     list(ball_frequency_sorted_dict.keys())]
-    make_plot(balls_sorted, list(ball_frequency_sorted_dict.values()), 
-              "real_balls_sorted", "Real Balls Sorted")
+    # make_plot(balls_sorted, list(ball_frequency_sorted_dict.values()), 
+    #           "real_balls_sorted", "Real Balls Sorted")
 
     # Simulate 1,000,000 of draws, total frequency of ball draw and plot 
-    # the simulated frequencies
-    number_draws = 1_000_000
-    simulated_draws = get_simulated_data(number_draws, lower_ball, 
-                                         higher_ball, balls_drawn)
-    simulated_frequencies = get_frequencies(simulated_draws, balls)
-    make_plot(balls, simulated_frequencies, "simulated_balls_draw", 
-            "Simulated 1,000,000 Draws")
-        
-    # Choose numbers to bet
-    qty_numbers_bet = 15
-    print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
+    # # the simulated frequencies
+    # number_draws = 1_000_000
+    # simulated_draws = get_simulated_data(number_draws, lower_ball, 
+    #                                      higher_ball, balls_drawn)
+    # simulated_frequencies = get_frequencies(simulated_draws, balls)
+    # make_plot(balls, simulated_frequencies, "simulated_balls_draw", 
+    #         "Simulated 1,000,000 Draws")
+
+    # Verify the ocurrence of sequential numbers, total and per draw.
+    draws_sorted = get_draws_integer_sorted(draws)
+    qty_sequential, sequential_draws_dict = \
+        get_qty_sequential_numbers(draws_sorted, balls_drawn)
+    # make_plot(list(qty_sequential.keys()), list(qty_sequential.values()), 
+    #           "sequential_numbers", "Quantity of sequential numbers")
+    
+    for key, value in sequential_draws_dict.items():
+        print(key, value)
+
+    # # Choose numbers to bet
+    # qty_numbers_bet = 15
+    # print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
     
 if __name__ == "__main__":
     main()
