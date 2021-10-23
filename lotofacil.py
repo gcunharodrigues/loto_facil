@@ -211,7 +211,7 @@ def main():
     count_keys = dict(sorted(list(count_keys.items()), key=itemgetter(1),
                              reverse=True))
     
-    first_three = dict(list(count_keys.items())[:3])
+    first_three = dict(list(count_keys.items())[:10])
     
     print(first_three)
     
