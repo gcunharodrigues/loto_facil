@@ -195,8 +195,9 @@ def main():
     #           "sequential_numbers", "Quantity of sequential numbers")
     
     for key, value in sequential_draws_dict.items():
-        print(key, value)
-
+        if key != 0:
+            if sequential_draws_dict[key-1] == value:
+                print(True)
     # # Choose numbers to bet
     # qty_numbers_bet = 15
     # print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
