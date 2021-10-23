@@ -189,26 +189,41 @@ def main():
 
     # Verify the ocurrence of sequential numbers, total and per draw.
     draws_sorted = get_draws_integer_sorted(draws)
-    qty_sequential, sequential_draws_dict = \
+    qty_sequential_numbers, sequential_numbers_dict = \
         get_qty_sequential_numbers(draws_sorted, balls_drawn)
-    # make_plot(list(qty_sequential.keys()), list(qty_sequential.values()), 
+    # make_plot(list(qty_sequential_numbers.keys()), 
+    #           list(qty_sequential_numbers.values()), 
     #           "sequential_numbers", "Quantity of sequential numbers")
     
     count_keys = {}
-    keys_list = []
-    for k_1, v_1 in sequential_draws_dict.items():
-        count_keys[k_1] = 0
-        
-        
-           
-        for k_2, v_2 in sequential_draws_dict.items():
-            print(k_1, k_2)
-            if k_2 > k_1 and k_2 not in keys_list:
-                if v_1 == v_2:
-                    keys_list.append(k_2)
-                    count_keys[k_1] += 1
-            print(keys_list)
     
+    sequential_numbers_list = list(sequential_numbers_dict.values())
+    
+    for k_1, v_1 in sequential_numbers_dict.items():
+        count_keys[k_1] = 0
+           
+        for value in sequential_numbers_list:
+            if v_1 == value:
+                sequential_numbers_list.remove(value)
+                count_keys[k_1] += 1
+    
+    count_keys = {k: v for k, v in count_keys.items() if v != 0}
+    count_keys = dict(sorted(list(count_keys.items()), key=itemgetter(1),
+                             reverse=True))
+    
+    first_three = dict(list(count_keys.items())[:3])
+    
+    print(first_three)
+    
+    for k in first_three.keys():
+        print(sequential_numbers_dict[k])
+    
+    # print(sequential_numbers_dict)
+    # most_draws = []
+    # for k in count_keys.keys():
+        
+        
+
     # # Choose numbers to bet
     # qty_numbers_bet = 15
     # print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
