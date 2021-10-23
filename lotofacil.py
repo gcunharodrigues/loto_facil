@@ -194,10 +194,21 @@ def main():
     # make_plot(list(qty_sequential.keys()), list(qty_sequential.values()), 
     #           "sequential_numbers", "Quantity of sequential numbers")
     
-    for key, value in sequential_draws_dict.items():
-        if key != 0:
-            if sequential_draws_dict[key-1] == value:
-                print(True)
+    count_keys = {}
+    sequential_draws_dict_copy = sequential_draws_dict
+    
+    for k_1, v_1 in sequential_draws_dict.items():
+        count_keys[k_1] = 0
+        
+        keys_list = []
+           
+        for k_2, v_2 in sequential_draws_dict_copy.items():
+            if k_2 != 0 and k_2 not in keys_list:
+                if v_1 == v_2:
+                    keys_list.append(k_2)
+                    count_keys[k_1] += 1
+
+        
     # # Choose numbers to bet
     # qty_numbers_bet = 15
     # print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
