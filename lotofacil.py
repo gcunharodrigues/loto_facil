@@ -113,7 +113,7 @@ def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
 def main():
     # Get real data from csv file
-    filename = 'data/loto_facil_compiled_draws_2345.csv'
+    filename = 'data/loto_facil_compiled_draws_2354.csv'
     header, data = get_data(filename)
 
     # Defining the balls that can be draw and amount of balls to be 
