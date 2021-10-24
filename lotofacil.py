@@ -223,7 +223,8 @@ def main():
     # Get key from draws and retrieve how many draws it appeared and 
     # sequence of sequential numbers,
     print(get_n_first_repeated_sequences(count_sequences, 
-                                         sequential_numbers_dict))
+                                         sequential_numbers_dict,
+                                         top_rank=None))
 
     # Choose numbers to bet
     qty_numbers_bet = 17
