@@ -146,6 +146,18 @@ def get_repeated_sequential_numbers(sequential_numbers_dict):
     
     return count_sequences
 
+def get_n_first_repeated_sequences(count_sequences, sequential_numbers_dict, 
+                                   top_rank=None):
+    
+    n_first = dict(list(count_sequences.items())[:top_rank])
+    
+    for k in n_first.keys():
+        n_first_dict = sequential_numbers_dict[k]
+        n_first_dict = {k: v for k, v in n_first_dict.items() if v != 0}
+        n_first[k] = {'times': n_first[k], 'sequence': n_first_dict}
+    
+    return n_first
+
 def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
     balls_sorted = list(ball_frequency_sorted_dict.keys())
@@ -205,16 +217,13 @@ def main():
     #           list(qty_sequential_numbers.values()), 
     #           "sequential_numbers", "Quantity of sequential numbers")
     
+    # Count how many times a sequence of sequential numbers happens.
     count_sequences = get_repeated_sequential_numbers(sequential_numbers_dict)
     
-    top_ten_sequence = dict(list(count_sequences.items())[:10])
-    
-    print(top_ten_sequence)
-    
-    for k in top_ten_sequence.keys():
-        top_ten_dict = sequential_numbers_dict[k]
-        top_ten_dict = {k: v for k, v in top_ten_dict.items() if v != 0}
-        print(top_ten_dict) 
+    # Get key from draws and retrieve how many draws it appeared and 
+    # sequence of sequential numbers,
+    print(get_n_first_repeated_sequences(count_sequences, 
+                                         sequential_numbers_dict))
 
     # Choose numbers to bet
     qty_numbers_bet = 17
