@@ -100,19 +100,9 @@ def create_ball_dict(draws_sorted, balls):
     return ball_dict
 
 def get_qty_sequential_numbers(draws_sorted, balls_drawn):
-    """Function that returns a dictionary the quantity of sequential 
-    numbers of all draws.
-    
-    Args:
-        draws_sorted (Nested List): Sorted nested list with integer 
-                                    numbers
-        balls_drawn (integer): How many balls will be drawn.
-
-    Returns:
-        Dictionary: Dictionary - {sequential: quantity}
-    """    
+      
     qty_sequential = {sequence: 0 for sequence in range(1, balls_drawn+1)}
-    sequential_draws_dict = {}
+    sequential_numbers_dict = {}
     
     for index_draw, draw in enumerate(draws_sorted):
         
@@ -132,9 +122,29 @@ def get_qty_sequential_numbers(draws_sorted, balls_drawn):
         qty_sequential[count] += 1
         sequential_draw[count] += 1
         
-        sequential_draws_dict[index_draw] = sequential_draw
+        sequential_numbers_dict[index_draw] = sequential_draw
         
-    return qty_sequential, sequential_draws_dict
+    return qty_sequential, sequential_numbers_dict
+
+def get_repeated_sequential_numbers(sequential_numbers_dict):
+    
+    count_sequences = {}
+    
+    sequential_numbers_list = list(sequential_numbers_dict.values())
+    
+    for k_1, v_1 in sequential_numbers_dict.items():
+        
+        count_sequences[k_1] = 0   
+        for value in sequential_numbers_list:
+            if v_1 == value:
+                sequential_numbers_list.remove(value)
+                count_sequences[k_1] += 1
+    
+    count_sequences = {k: v for k, v in count_sequences.items() if v != 0}
+    count_sequences = dict(sorted(list(count_sequences.items()), key=itemgetter(1),
+                             reverse=True))
+    
+    return count_sequences
 
 def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
@@ -195,38 +205,20 @@ def main():
     #           list(qty_sequential_numbers.values()), 
     #           "sequential_numbers", "Quantity of sequential numbers")
     
-    count_keys = {}
+    count_sequences = get_repeated_sequential_numbers(sequential_numbers_dict)
     
-    sequential_numbers_list = list(sequential_numbers_dict.values())
+    top_ten_sequence = dict(list(count_sequences.items())[:10])
     
-    for k_1, v_1 in sequential_numbers_dict.items():
-        count_keys[k_1] = 0
-           
-        for value in sequential_numbers_list:
-            if v_1 == value:
-                sequential_numbers_list.remove(value)
-                count_keys[k_1] += 1
+    print(top_ten_sequence)
     
-    count_keys = {k: v for k, v in count_keys.items() if v != 0}
-    count_keys = dict(sorted(list(count_keys.items()), key=itemgetter(1),
-                             reverse=True))
-    
-    first_three = dict(list(count_keys.items())[:10])
-    
-    print(first_three)
-    
-    for k in first_three.keys():
-        print(sequential_numbers_dict[k])
-    
-    # print(sequential_numbers_dict)
-    # most_draws = []
-    # for k in count_keys.keys():
-        
-        
+    for k in top_ten_sequence.keys():
+        top_ten_dict = sequential_numbers_dict[k]
+        top_ten_dict = {k: v for k, v in top_ten_dict.items() if v != 0}
+        print(top_ten_dict) 
 
-    # # Choose numbers to bet
-    # qty_numbers_bet = 15
-    # print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
+    # Choose numbers to bet
+    qty_numbers_bet = 17
+    print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
     
 if __name__ == "__main__":
     main()
