@@ -172,7 +172,7 @@ def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
 def main():
     # Get real data from csv file
-    filename = 'data/loto_facil_compiled_draws_2354.csv'
+    filename = 'data/loto_facil_compiled_draws_2371.csv'
     header, data = get_data(filename)
 
     # Defining the balls that can be draw and amount of balls to be 
@@ -224,10 +224,10 @@ def main():
     # sequence of sequential numbers,
     print(get_n_first_repeated_sequences(count_sequences, 
                                          sequential_numbers_dict,
-                                         top_rank=None))
+                                         top_rank=3))
 
     # Choose numbers to bet
-    qty_numbers_bet = 17
+    qty_numbers_bet = 15
     print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
     
 if __name__ == "__main__":
