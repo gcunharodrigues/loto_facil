@@ -162,17 +162,18 @@ def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
     balls_sorted = list(ball_frequency_sorted_dict.keys())
     balls_bet = balls_sorted[:qty_numbers_bet]
+    balls_bet_unsorted = balls_bet.copy()
     balls_bet.sort()
     
     filename = 'numbers_to_bet.txt'
     with open(filename, 'w') as f:
         f.write(f"{balls_bet}")
 
-    return balls_bet
+    return balls_bet, balls_bet_unsorted
     
 def main():
     # Get real data from csv file
-    filename = 'data/loto_facil_asloterias_ate_concurso_2377_sorteio.csv'
+    filename = 'data/loto_facil_asloterias_ate_concurso_2388_sorteio.csv'
     header, data = get_data(filename)
 
     # Defining the balls that can be draw and amount of balls to be 
