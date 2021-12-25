@@ -1,4 +1,5 @@
 import csv
+import glob
 
 from plotly.graph_objs import Bar
 from plotly import offline
@@ -49,7 +50,7 @@ def get_data(filename):
         header = next(reader)
         data = [row for row in reader]
         
-    return header, data
+    return data
 
 def get_simulated_data(number_draws, lower_ball, 
                        higher_ball, balls_drawn):
@@ -173,8 +174,8 @@ def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
     
 def main():
     # Get real data from csv file
-    filename = 'data/loto_facil_asloterias_ate_concurso_2388_sorteio.csv'
-    header, data = get_data(filename)
+    filename = 'data/' + file[0]
+    data = get_data(filename)
 
     # Defining the balls that can be draw and amount of balls to be 
     # draw.
