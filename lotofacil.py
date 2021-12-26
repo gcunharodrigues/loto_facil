@@ -1,5 +1,6 @@
 import csv
 import glob
+import pandas as pd
 
 from plotly.graph_objs import Bar
 from plotly import offline
@@ -171,10 +172,23 @@ def get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet):
         f.write(f"{balls_bet}")
 
     return balls_bet, balls_bet_unsorted
+
+def create_filename():
+    filename = glob.glob("data/*.xlsx")
+
+    df = pd.read_excel(filename[0])
+    df = df.dropna()
+
+    new_header = df.iloc[0] #grab the first row for the header
+    df = df[1:] #take the data less the header row
+    df.columns = new_header #set the header row as the df header
+
+    df.to_csv('data/sorteio.csv', index=False)
+    return 'data/sorteio.csv'
     
 def main():
     # Get real data from csv file
-    filename = 'data/' + file[0]
+    filename = create_filename()
     data = get_data(filename)
 
     # Defining the balls that can be draw and amount of balls to be 
@@ -229,7 +243,7 @@ def main():
                                          top_rank=3))
 
     # Choose numbers to bet
-    qty_numbers_bet = 15
+    qty_numbers_bet = 25
     print(get_numbers_to_bet(ball_frequency_sorted_dict, qty_numbers_bet))
     
 if __name__ == "__main__":
